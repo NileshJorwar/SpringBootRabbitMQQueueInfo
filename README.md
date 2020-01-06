@@ -21,5 +21,26 @@
     }
    
    ``
-   
-  
+2. To get the Queue information 
+    - Add bean to RabbitMQConfig
+    ``
+    @Bean
+    	public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory)
+    	{
+    		return new RabbitAdmin(connectionFactory);
+    	}
+    ``
+    - Import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+    - Create service to implement the functionality Queue info
+    ``
+       @Autowired
+       RabbitAdmin rabbitAdmin;
+       public String queueSize()
+       {
+           Properties properties;
+           properties=rabbitAdmin.getQueueProperties("javainuse.queue");
+           //System.out.println("QUeue Size--"+properties.get("QUEUE_MESSAGE_COUNT").toString());
+           return "Current Queue Size--"+ properties.get("QUEUE_MESSAGE_COUNT").toString();
+       }
+    ``
+    
